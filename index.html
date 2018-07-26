@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style type="text/css">
+    canvas{border:1px solid red;}
+    </style>
+</head>
+<body>
+<canvas width="500" height="400"></canvas>
+<script src="js/tool.js"></script>
+<script src="js/sky.js"></script>
+<script src="js/pipe.js"></script>
+<script src="js/land.js"></script>
+<script src="js/bird.js"></script>
+<script src="js/gameScene.js"></script>
+<script src="js/overScene.js"></script>
+
+<script type="text/javascript">
+var oCanvas = document.getElementsByTagName('canvas')[0];
+var ctx = oCanvas.getContext("2d");
+
+var imgUrl = {'sky': 'images/sky.png', 'land': 'images/land.png', 'bird': 'images/bird.png','pipeDown': 'images/pipeDown.png', 'pipeUp': 'images/pipeUp.png'};
+
+imgLoaded( imgUrl, function(imgObj){
+
+    oCanvas.width = imgObj.sky.width;
+    oCanvas.height = imgObj.sky.height;
+
+    console.log(imgObj.bird.width);
+
+    var timer = null;
+    var scene = getScene( ctx , imgObj, timer );
+    var over = getOver( ctx );
+    var bIsRun = true;
+
+
+    scene.addListener(function(){
+
+        bIsRun = false;
+        over.draw();
+
+    });
+
+    (function run(){
+
+        scene.draw();
+        if(bIsRun){
+
+            requestAnimationFrame(run);
+
+        }
+
+    })();
+
+
+} )
+
+//想办法只调用一个函数或者实例一个对象搞定这个游戏,所有的内容都是参数 {}
+</script>
+</body>
+</html>
